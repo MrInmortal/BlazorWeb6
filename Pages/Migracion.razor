@@ -1,0 +1,27 @@
+﻿@page "/migracion"
+@inject HttpClient Http
+
+<h3>Noticias de Migración</h3>
+<ul>
+    @if (noticias != null && noticias.Count > 0)
+    {
+        foreach (var noticia in noticias)
+        {
+            <li>@noticia.Title - @noticia.Excerpt</li>
+        }
+    }
+    else
+    {
+        <li>No hay noticias disponibles.</li>
+    }
+</ul>
+
+@code {
+    private List<Noticia>
+    noticias;
+
+    protected override async Task OnInitializedAsync()
+    {
+    noticias = await Http.GetFromJsonAsync<List<Noticia>>("noticias");
+    }
+}
